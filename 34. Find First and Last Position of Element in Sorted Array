@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int findOccurrence(vector<int>& nums, int target, bool findFirst) {
+        int start = 0;
+        int end = nums.size() - 1;
+        int ans = -1;
+        
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            
+            if (nums[mid] == target) {
+                ans = mid;
+                if (findFirst) {
+                    end = mid - 1; // Look left for the first
+                } else {
+                    start = mid + 1; // Look right for the last
+                }
+            } 
+            else if (nums[mid] < target) {
+                start = mid + 1;
+            } 
+            else {
+                end = mid - 1;
+            }
+        }
+        return ans;
+    }
+
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int first = findOccurrence(nums, target, true);
+        int last = findOccurrence(nums, target, false);
+        
+        return {first, last}; // Returns a vector containing both indices
+    }
+};
